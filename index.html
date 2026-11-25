@@ -1,0 +1,439 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Struktur Organisasi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;600;700&display=swap">
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #0b0b0d;
+  --merah: #d7161e;
+  --merah-atas: #ff3a40;
+  --merah-tua: #7a0a10;
+  --putih: #f5f5f7;
+  --abu: #c9c9d1;
+  --ink: #141417;
+  --garis: #d9d9e0;
+  --display: "Oswald", "Arial Narrow", Impact, sans-serif;
+  --teks: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --miring: polygon(14px 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0 50%);
+}
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+body {
+  margin: 0;
+  color: var(--putih);
+  font-family: var(--teks);
+  font-size: 15px;
+  line-height: 1.5;
+  background:
+    radial-gradient(1000px 620px at 50% -12%, #2c0b0e 0%, transparent 60%),
+    repeating-linear-gradient(115deg, rgba(255,255,255,.018) 0 2px, transparent 2px 10px),
+    var(--bg);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  overflow-x: hidden;
+}
+
+.page {
+  position: relative;
+  overflow: hidden;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-block: 44px 56px;
+}
+
+.glow {
+  position: absolute;
+  left: 50%;
+  top: -200px;
+  width: 760px;
+  height: 760px;
+  margin-left: -380px;
+  background: radial-gradient(closest-side, rgba(215,22,30,.34), transparent 72%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---------- Judul ---------- */
+.judul-wrap { text-align: center; position: relative; z-index: 1; }
+h1.judul {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(38px, 9vw, 88px);
+  line-height: 0.95;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  text-shadow: 4px 4px 0 var(--merah);
+}
+.ch { display: inline-block; }
+.sub {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 16px;
+  font-family: var(--display);
+  font-size: clamp(14px, 3.6vw, 20px);
+  letter-spacing: .3em;
+  color: var(--abu);
+  text-transform: uppercase;
+}
+.sub-garis { flex: 1; max-width: 180px; height: 2px; background: linear-gradient(90deg, transparent, var(--putih)); transform-origin: center; }
+.sub-garis.kanan { background: linear-gradient(90deg, var(--putih), transparent); }
+
+/* ---------- Kartu jabatan ---------- */
+.node { position: relative; z-index: 1; width: min(260px, 100%); margin: 0 auto; }
+.node.ketua { width: min(300px, 100%); }
+.role {
+  background: linear-gradient(180deg, var(--merah-atas) 0%, var(--merah) 55%, var(--merah-tua) 100%);
+  color: #fff;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 10px 18px 8px;
+  clip-path: var(--miring);
+}
+.person {
+  margin-top: 4px;
+  background: linear-gradient(180deg, #ffffff, #d9d9e0);
+  color: var(--ink);
+  clip-path: var(--miring);
+  padding: 16px 14px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  transition: transform .35s ease;
+}
+.node:hover .person { transform: translateY(-4px); }
+.foto {
+  width: 84px;
+  height: 84px;
+  flex: none;
+  border-radius: 50%;
+  border: 3px solid var(--merah);
+  background: #2a2a30;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,.35);
+}
+.foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.inisial { font-family: var(--display); font-size: 28px; font-weight: 600; color: var(--putih); letter-spacing: .04em; }
+.nama {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 1.15;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Garis penghubung ---------- */
+.vline {
+  width: 3px;
+  height: 40px;
+  margin: 0 auto;
+  background: var(--garis);
+  border-radius: 2px;
+  transform-origin: top center;
+  position: relative;
+  z-index: 0;
+}
+
+/* ---------- Pengurus (Sekretaris & Bendahara) ---------- */
+.tier-3 {
+  --n: 4;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--n), 1fr);
+}
+.bar {
+  position: absolute;
+  top: 0;
+  height: 3px;
+  left: calc(100% / (var(--n) * 2));
+  right: calc(100% / (var(--n) * 2));
+  background: var(--garis);
+  transform-origin: center;
+}
+.cell { position: relative; padding: 40px 8px 0; min-width: 0; }
+.cell .node { width: 100%; }
+.drop {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 3px;
+  height: 40px;
+  margin-left: -1.5px;
+  background: var(--garis);
+  transform-origin: top center;
+}
+
+/* ---------- Seksi Bidang ---------- */
+.seksi-judul {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 64px 0 30px;
+}
+.pita {
+  background: linear-gradient(180deg, var(--merah-atas) 0%, var(--merah) 55%, var(--merah-tua) 100%);
+  color: #fff;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(20px, 4.5vw, 28px);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 10px 40px 8px;
+  clip-path: polygon(22px 0, calc(100% - 22px) 0, 100% 50%, calc(100% - 22px) 100%, 22px 100%, 0 50%);
+}
+.slash { width: 46px; height: 14px; flex: none; background: var(--merah); transform: skewX(-30deg); }
+
+.seksi-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+.seksi { min-width: 0; display: flex; flex-direction: column; }
+.seksi-head {
+  background: linear-gradient(180deg, var(--merah-atas) 0%, var(--merah) 55%, var(--merah-tua) 100%);
+  color: #fff;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 10px 16px 8px;
+  clip-path: var(--miring);
+}
+.seksi-body {
+  margin-top: 4px;
+  background: linear-gradient(180deg, #ffffff, #d9d9e0);
+  color: var(--ink);
+  clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px);
+}
+.anggota-label {
+  background: var(--ink);
+  color: var(--putih);
+  font-family: var(--display);
+  font-size: 13px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 5px 0 4px;
+}
+.anggota-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 16px 12px 18px;
+}
+.mini { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 0; }
+.mini .foto { width: 64px; height: 64px; border-width: 2px; transition: transform .3s ease; }
+.mini .inisial { font-size: 22px; }
+.mini .nama { font-size: 15px; color: var(--ink); text-align: center; }
+.mini:hover .foto { transform: scale(1.06); }
+
+/* ---------- Motto ---------- */
+.motto {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 14px;
+  margin: 56px 0 0;
+  text-align: center;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(16px, 4vw, 26px);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.motto .titik { color: var(--merah); }
+
+/* ---------- Tablet & HP ---------- */
+@media (max-width: 640px) {
+  .bar, .drop { display: none; }
+  .tier-3 { grid-template-columns: repeat(2, 1fr); row-gap: 22px; }
+  .cell { padding: 0 6px; }
+  .foto { width: 72px; height: 72px; }
+  .nama { font-size: 17px; }
+  .anggota-grid { gap: 10px; padding: 14px 10px 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+</style>
+
+<div class="page">
+  <div class="glow" aria-hidden="true"></div>
+
+  <header class="judul-wrap">
+    <h1 class="judul" id="judul">Struktur Organisasi</h1>
+    <div class="sub">
+      <span class="sub-garis"></span>
+      <span class="sub-teks">Kelompok / Organisasi</span>
+      <span class="sub-garis kanan"></span>
+    </div>
+  </header>
+
+  <div style="position:relative;z-index:1;margin-top:40px">
+    <div id="tier-1"></div>
+    <div class="vline stem"></div>
+    <div id="tier-2"></div>
+    <div class="vline stem"></div>
+
+    <div class="tier-3" id="pengurus"><div class="bar"></div></div>
+  </div>
+
+  <div class="seksi-judul">
+    <span class="slash"></span>
+    <h2 class="pita">Seksi Bidang</h2>
+    <span class="slash"></span>
+  </div>
+
+  <section class="seksi-grid" id="seksi"></section>
+
+  <footer class="motto">
+    <span>Bersatu</span><span class="titik">•</span>
+    <span>Berkarya</span><span class="titik">•</span>
+    <span>Berprestasi</span>
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function () {
+  /* ===== DATA: ganti nama & foto di sini ===== */
+  /* foto: kosongkan ("") untuk inisial, atau isi URL/data URI gambar */
+  const DATA = {
+    ketua:  { jabatan: "Ketua", nama: "Ahmad Sanusi", foto: "" },
+    wakil:  { jabatan: "Wakil Ketua", nama: "Dimas .s", foto: "" },
+    pengurus: [
+      { jabatan: "Sekretaris 1", nama: "Egi m.s", foto: "" },
+      { jabatan: "Sekretaris 2", nama: "Mulyana", foto: "" },
+      { jabatan: "Bendahara 1", nama: "Farid nico firdaus", foto: "" },
+      { jabatan: "Bendahara 2", nama: "Belum diisi", foto: "" }
+    ],
+    seksi: [
+      { nama: "Seksi Kebersihan", anggota: [
+        { nama: "Fernando", foto: "" }, { nama: "Chiesya", foto: "" } ] },
+      { nama: "Seksi Kejomokan", anggota: [
+        { nama: "Ahmad Maulana", foto: "" }, { nama: "Fajri", foto: "" } ] },
+      { nama: "Seksi Keamanan", anggota: [
+        { nama: "Ardy", foto: "" }, { nama: "Sahrul", foto: "" } ] },
+      { nama: "Seksi Kebaikan", anggota: [
+        { nama: "Nunu Junaedi", foto: "" }, { nama: "Dimas .s", foto: "" } ] }
+    ]
+  };
+
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  const inisial = (n) => n.trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
+
+  const fotoHTML = (p) => `<div class="foto">${
+    p.foto ? `<img src="${esc(p.foto)}" alt="${esc(p.nama)}">`
+           : `<span class="inisial">${esc(inisial(p.nama))}</span>`
+  }</div>`;
+
+  const nodeHTML = (jabatan, p, kelas = "") =>
+    `<div class="node ${kelas}"><div class="role">${esc(jabatan)}</div>` +
+    `<div class="person">${fotoHTML(p)}<div class="nama">${esc(p.nama)}</div></div></div>`;
+
+  /* ===== RENDER ===== */
+  document.getElementById("tier-1").innerHTML = nodeHTML(DATA.ketua.jabatan, DATA.ketua, "ketua");
+  document.getElementById("tier-2").innerHTML = nodeHTML(DATA.wakil.jabatan, DATA.wakil);
+
+  const pengurus = document.getElementById("pengurus");
+  pengurus.style.setProperty("--n", DATA.pengurus.length);
+  pengurus.insertAdjacentHTML("beforeend", DATA.pengurus.map((p) =>
+    `<div class="cell"><i class="drop"></i>${nodeHTML(p.jabatan, p)}</div>`).join(""));
+
+  document.getElementById("seksi").innerHTML = DATA.seksi.map((s) => `
+    <article class="seksi">
+      <div class="seksi-head">${esc(s.nama)}</div>
+      <div class="seksi-body">
+        <div class="anggota-label">Anggota</div>
+        <div class="anggota-grid">
+          ${s.anggota.map((a) => `
+            <div class="mini">${fotoHTML(a)}<div class="nama">${esc(a.nama)}</div></div>`).join("")}
+        </div>
+      </div>
+    </article>`).join("");
+
+  /* Pecah judul jadi huruf supaya bisa dianimasikan */
+  const judul = document.getElementById("judul");
+  judul.innerHTML = [...judul.textContent].map((c) =>
+    c === " " ? " " : `<span class="ch">${esc(c)}</span>`).join("");
+
+  /* ===== MOTION (Lenis + GSAP) ===== */
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!window.gsap || reduce) return; // konten tetap tampil tanpa animasi
+
+  let lenis = null;
+  const hasST = !!window.ScrollTrigger;
+  if (hasST) gsap.registerPlugin(ScrollTrigger);
+
+  if (window.Lenis) {
+    lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+    if (hasST) lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  // Ambient glow berdenyut pelan
+  gsap.to(".glow", { scale: 1.12, opacity: 0.7, duration: 4, repeat: -1, yoyo: true, ease: "sine.inOut" });
+
+  // Urutan masuk: judul → Ketua → Wakil → garis → pengurus → seksi
+  const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+  tl.from(".ch", { y: 70, opacity: 0, rotate: -10, duration: 0.8, stagger: 0.04, ease: "back.out(1.6)" })
+    .from(".sub-garis", { scaleX: 0, duration: 0.7, stagger: 0.1 }, "-=0.35")
+    .from(".sub-teks", { opacity: 0, y: 12, duration: 0.5 }, "-=0.4")
+    .from("#tier-1 .node", { scale: 0.6, opacity: 0, duration: 0.7, ease: "back.out(1.7)" }, "-=0.2")
+    .from(".stem", { scaleY: 0, duration: 0.45, stagger: 0.25 }, "-=0.1")
+    .from("#tier-2 .node", { y: -24, opacity: 0, duration: 0.6 }, "-=0.1")
+    .from("#pengurus .bar", { scaleX: 0, duration: 0.6 }, "-=0.1")
+    .from("#pengurus .drop", { scaleY: 0, duration: 0.35, stagger: 0.1 }, "-=0.1")
+    .from("#pengurus .cell .node", { y: 36, opacity: 0, duration: 0.6, stagger: 0.12 }, "-=0.2")
+    .from(".seksi-judul", { opacity: 0, y: 20, duration: 0.6 }, "-=0.2");
+
+  // Tiap Seksi muncul saat di-scroll
+  document.querySelectorAll(".seksi").forEach((card) => {
+    const cardTl = hasST
+      ? gsap.timeline({ scrollTrigger: { trigger: card, start: "top 88%", once: true } })
+      : gsap.timeline();
+    cardTl.from(card, { y: 60, opacity: 0, duration: 0.8, ease: "power3.out" })
+      .from(card.querySelectorAll(".mini"), { scale: 0, opacity: 0, duration: 0.5, stagger: 0.12, ease: "back.out(2)" }, "-=0.35");
+  });
+
+  if (hasST) {
+    gsap.from(".motto", {
+      opacity: 0, y: 20, duration: 0.8,
+      scrollTrigger: { trigger: ".motto", start: "top 92%", once: true }
+    });
+  }
+})();
+</script>
